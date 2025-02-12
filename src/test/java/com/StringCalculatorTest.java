@@ -1,15 +1,27 @@
 package com;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class StringCalculatorTest {
+    StringCalculator stringCalculator;
+
+    @BeforeEach
+    public void init() {
+        stringCalculator = new StringCalculator();
+    }
+
+    @AfterEach
+    public void destroy() {
+        stringCalculator = null;
+    }
 
     @Test
     public void testSingleAddNumber() {
-        StringCalculator stringCalculator = new StringCalculator();
         assertEquals(0, stringCalculator.add(""));
         assertEquals(1, stringCalculator.add("1"));
         assertEquals(2, stringCalculator.add("2"));
@@ -17,31 +29,26 @@ public class StringCalculatorTest {
 
     @Test
     public void testAddMultipleNumbers() {
-        StringCalculator stringCalculator = new StringCalculator();
         assertEquals(7, stringCalculator.add("5,2"));
     }
 
     @Test
     public void testEmptyString() {
-        StringCalculator stringCalculator = new StringCalculator();
         assertEquals(0, stringCalculator.add(""));
     }
 
     @Test
     public void testNewLine(){
-        StringCalculator stringCalculator = new StringCalculator();
         assertEquals(15, stringCalculator.add("1\n2,3\n4\n5"));
     }
 
     @Test
     public void testOtherDelimiter() {
-        StringCalculator stringCalculator = new StringCalculator();
         assertEquals(3, stringCalculator.add("//;\n1;2"));
     }
 
     @Test
     public void testNegativeNumber() {
-        StringCalculator stringCalculator = new StringCalculator();
         IllegalArgumentException exception1 = assertThrows(IllegalArgumentException.class,
                 () -> stringCalculator.add("-7,7"));
         assertEquals("Negatives not allowed: -7", exception1.getMessage());
@@ -53,27 +60,23 @@ public class StringCalculatorTest {
 
     @Test
     public void testNumberValueOverThousand() {
-        StringCalculator stringCalculator = new StringCalculator();
         assertEquals(10, stringCalculator.add("1000,10"));
     }
 
     @Test
     public void testAddWithMultiCharacterDelimiter() {
-        StringCalculator stringCalculator = new StringCalculator();
         int result = stringCalculator.add("//[***]\n1***2***3");
         assertEquals(6, result);
     }
 
     @Test
     public void testMultipleDelimiters() {
-        StringCalculator calculator = new StringCalculator();
-        assertEquals(6, calculator.add("//[*][%]\n1*2%3"));
+        assertEquals(6, stringCalculator.add("//[*][%]\n1*2%3"));
     }
 
     @Test
     public void testMultipleDifferentLengthDelimiters() {
-        StringCalculator calculator = new StringCalculator();
-        assertEquals(6, calculator.add("//[***][%]\n1***2%3"));
+        assertEquals(6, stringCalculator.add("//[***][%]\n1***2%3"));
     }
 
 
