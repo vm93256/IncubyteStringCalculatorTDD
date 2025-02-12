@@ -33,8 +33,23 @@ public class StringCalculator {
     }
 
     private int sum(String[] numbers) {
-        return Arrays.stream(numbers)
-                .mapToInt(this::convertToInt)
-                .sum();
+        int total = 0;
+        StringBuilder negativeString = new StringBuilder();
+
+        for (String number : numbers) {
+            if (convertToInt(number) < 0) {
+                if (negativeString.toString().equals(""))
+                    negativeString = new StringBuilder(number);
+                else
+                    negativeString.append(",").append(number);
+            }
+            total += convertToInt(number);
+        }
+
+        if (!negativeString.toString().equals("")) {
+            throw new IllegalArgumentException("Negatives not allowed: " + negativeString);
+        }
+
+        return total;
     }
 }
