@@ -43,7 +43,7 @@ public class StringCalculator {
                 else
                     negativeString.append(",").append(number);
             }
-            total += convertToInt(number);
+            if (convertToInt(number) < 1000) total += convertToInt(number);
         }
 
         if (!negativeString.toString().equals("")) {
