@@ -57,5 +57,12 @@ public class StringCalculatorTest {
         assertEquals(10, stringCalculator.add("1000,10"));
     }
 
+    @Test
+    public void testAddWithMultiCharacterDelimiter() {
+        StringCalculator stringCalculator = new StringCalculator();
+        int result = stringCalculator.add("//[***]\n1***2***3");
+        assertEquals(6, result);
+    }
+
 
 }
