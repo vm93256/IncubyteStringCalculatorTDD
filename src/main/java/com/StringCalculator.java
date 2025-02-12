@@ -13,8 +13,14 @@ public class StringCalculator {
                 return convertToInt(numbers);
             }
         }else {
-            String delimiter = ",|\n";
-            return sum(splitNumbers(numbers, delimiter));
+            String delimiter = ",";
+            if (numbers.matches("//(.*)\n(.*)")) {
+                delimiter = Character.toString(numbers.charAt(2));
+                numbers = numbers.substring(4);
+                System.out.println(numbers);
+            }
+
+            return sum(splitNumbers(numbers, delimiter + "|\n"));
         }
     }
 
