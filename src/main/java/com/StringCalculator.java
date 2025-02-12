@@ -1,7 +1,6 @@
 package com;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -19,7 +18,7 @@ public class StringCalculator {
             delimiter = Character.toString(numbers.charAt(2));
             numbers = numbers.substring(4);
         }
-        else if (numbers.matches("//\\[.*\\]\n.*")) {
+        else if (numbers.matches("//(\\[.*?])+\\n.*")) {
             Matcher matcher = Pattern.compile("//(\\[.*?])+\\n").matcher(numbers);
             if (matcher.find()) {
                 String delimitersSection = matcher.group();
@@ -34,6 +33,7 @@ public class StringCalculator {
                 numbers = numbers.substring(matcher.end());
             }
         }
+
 
         return sum(splitNumbers(numbers, delimiter));
     }
